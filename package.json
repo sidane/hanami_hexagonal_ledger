@@ -1,0 +1,8 @@
+{
+  "name": "hanami_hexagonal_ledger",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "hanami-assets": "^2.3.0"
+  }
+}
