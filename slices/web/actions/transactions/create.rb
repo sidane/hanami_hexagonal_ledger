@@ -19,56 +19,29 @@ module Web
         end
 
         def handle(request, response)
-          account_id = request.params[:account_id]
-
           unless request.params.valid?
-            response.status = 422
-            response.format = :json
-            response.body = {errors: request.params.errors.to_h}.to_json
-            return
+            return json_response(response:, status: 422) do
+              {errors: request.params.errors.to_h}
+            end
           end
 
+          account_id = request.params[:account_id]
           input = request.params[:transaction]
 
-          begin
-            updated_account, transaction = record_transaction_service.call(
-              account_id:,
-              amount: input[:amount],
-              type: input[:type],
-              currency: input[:currency] || "GBP",
-              description: input[:description]
-            )
-          rescue BudgetLedger::Domain::Errors::AccountNotFound => e
-            response.status = 404
-            response.format = :json
-            response.body = {error: e.message}.to_json
-            return
-          rescue BudgetLedger::Domain::Errors::InsufficientFunds => e
-            response.status = 422
-            response.format = :json
-            response.body = {error: e.message}.to_json
-            return
-          end
+          updated_account, transaction = record_transaction_service.call(
+            account_id:,
+            amount: input[:amount],
+            type: input[:type],
+            currency: input[:currency] || "GBP",
+            description: input[:description]
+          )
 
-          response.status = 201
-          response.format = :json
-          response.body = {
-            account: {
-              id: updated_account.id,
-              name: updated_account.name,
-              balance: updated_account.balance.to_s,
-              currency: updated_account.balance.currency
-            },
-            transaction: {
-              id: transaction.id,
-              account_id: transaction.account_id,
-              amount: transaction.amount.to_s,
-              currency: transaction.amount.currency,
-              type: transaction.type,
-              timestamp: transaction.timestamp,
-              description: transaction.description
-            }
-          }.to_json
+          json_response(response:, status: 201) do
+            Serializers::AccountTransactionSerializer.serialize(
+              account: updated_account,
+              transaction:
+            )
+          end
         end
       end
     end

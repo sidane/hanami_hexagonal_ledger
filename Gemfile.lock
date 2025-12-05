@@ -1,3 +1,13 @@
+PATH
+  remote: ../hanami-controller
+  specs:
+    hanami-controller (2.3.0)
+      dry-configurable (~> 1.0, < 2)
+      dry-core (~> 1.0)
+      hanami-utils (~> 2.3.0)
+      rack (>= 2.1)
+      zeitwerk (~> 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -152,12 +162,6 @@ GEM
       irb
       rackup
       rake (~> 13.0)
-      zeitwerk (~> 2.6)
-    hanami-controller (2.3.0)
-      dry-configurable (~> 1.0, < 2)
-      dry-core (~> 1.0)
-      hanami-utils (~> 2.3.0)
-      rack (>= 2.1)
       zeitwerk (~> 2.6)
     hanami-db (2.3.0)
       rom (~> 5.4, >= 5.4.1)
@@ -358,7 +362,7 @@ DEPENDENCIES
   dry-types (~> 1.7)
   hanami (~> 2.3.0)
   hanami-assets (~> 2.3.0)
-  hanami-controller (~> 2.3.0)
+  hanami-controller!
   hanami-db (~> 2.3.0)
   hanami-reloader (~> 2.3.0)
   hanami-router (~> 2.3.0)

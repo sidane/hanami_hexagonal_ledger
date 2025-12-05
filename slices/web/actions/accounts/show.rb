@@ -11,10 +11,6 @@ module Web
           "ledger.persistence.transaction_repository"
         ]
 
-        handle_exception(
-          "BudgetLedger::Domain::Errors::AccountNotFound" => :handle_account_not_found
-        )
-
         def handle(request, response)
           account_details = BudgetLedger::Domain::UseCases::GetAccountDetails.new(
             account_repository:,
@@ -27,12 +23,6 @@ module Web
         end
 
         private
-
-        def handle_account_not_found(request, response, exception)
-          json_response(response:, status: 404) do
-            {error: exception.message}
-          end
-        end
       end
     end
   end
