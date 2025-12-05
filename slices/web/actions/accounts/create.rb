@@ -4,7 +4,7 @@ module Web
   module Actions
     module Accounts
       class Create < Web::Action
-        include Deps["ledger.open_account"]
+        include Deps["ledger.services.open_account_service"]
 
         params do
           required(:account).hash do
@@ -24,7 +24,7 @@ module Web
 
           account_params = request.params[:account]
 
-          account = open_account.call(
+          account = open_account_service.call(
             name: account_params[:name],
             opening_balance: account_params.fetch(:opening_balance, 0),
             currency: account_params.fetch(:currency, "GBP")
