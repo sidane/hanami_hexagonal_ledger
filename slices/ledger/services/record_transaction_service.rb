@@ -10,25 +10,10 @@ module Ledger
       ]
 
       def call(account_id:, amount:, type:, currency: "GBP", description: nil)
-        account = BudgetLedger::Domain::UseCases::OpenAccount.new(
-          account_repository:
-        ).call(
-          name: "Joe Bloggs",
-          opening_balance: 1000,
-          currency: "GBP"
-        )
-        use_case = BudgetLedger::Domain::UseCases::RecordTransaction.new(
+        BudgetLedger::Domain::UseCases::RecordTransaction.new(
           account_repository:,
           transaction_repository:
-        )
-
-        use_case.call(
-          account_id: account.id,
-          amount:,
-          type:,
-          currency:,
-          description:
-        )
+        ).call(account_id:, amount:, type:, currency:, description:)
       end
     end
   end

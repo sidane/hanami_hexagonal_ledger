@@ -6,15 +6,9 @@ module Ledger
       include Deps["persistence.account_repository"]
 
       def call(name:, opening_balance:, currency:)
-        use_case = BudgetLedger::Domain::UseCases::OpenAccount.new(
+        BudgetLedger::Domain::UseCases::OpenAccount.new(
           account_repository:
-        )
-
-        use_case.call(
-          name:,
-          opening_balance:,
-          currency:
-        )
+        ).call(name:, opening_balance:, currency:)
       end
     end
   end

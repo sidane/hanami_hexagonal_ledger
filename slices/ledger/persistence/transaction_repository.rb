@@ -7,8 +7,14 @@ module Ledger
     class TransactionRepository
       include BudgetLedger::Domain::Ports::TransactionRepository
 
+      @store = {}
+
+      class << self
+        attr_reader :store
+      end
+
       def initialize
-        @store = {}
+        @store = self.class.store
       end
 
       # Outbound port implementation

@@ -7,8 +7,14 @@ module Ledger
     class AccountRepository
       include BudgetLedger::Domain::Ports::AccountRepository
 
+      @store = {}
+
+      class << self
+        attr_reader :store
+      end
+
       def initialize
-        @store = {}
+        @store = self.class.store
       end
 
       def find(id)
