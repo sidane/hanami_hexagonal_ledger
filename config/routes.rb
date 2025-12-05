@@ -10,7 +10,7 @@ module HanamiHexagonalLedger
 
     slice :web, at: "/" do
       post "/accounts", to: "accounts.create"
-      post "/accounts", to: "accounts.create"
+      post "/accounts/:account_id/transaction", to: "transactions.create"
     end
   end
 end

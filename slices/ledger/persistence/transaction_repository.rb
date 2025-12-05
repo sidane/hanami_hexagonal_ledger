@@ -12,7 +12,7 @@ module Ledger
       end
 
       # Outbound port implementation
-      def create(account)
+      def create(transaction)
         id = SecureRandom.uuid
         stored = BudgetLedger::Domain::Entities::Transaction.new(
           id:,

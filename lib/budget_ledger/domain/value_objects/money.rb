@@ -9,6 +9,10 @@ module BudgetLedger
           @currency = currency
         end
 
+        def to_s
+          "#{amount.to_s("F")} #{currency}"
+        end
+
         def +(other)
           assert_same_currency!(other)
           Money.new(amount + other.amount, currency: currency)

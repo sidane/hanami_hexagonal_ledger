@@ -14,7 +14,7 @@ module BudgetLedger
         end
 
         def signed_amount
-          case type
+          case type.to_sym
           when :credit
             amount
           when :debit
