@@ -1,0 +1,29 @@
+module BudgetLedger
+  module Domain
+    module Entities
+      class Transaction
+        attr_reader :id, :account_id, :amount, :type, :timestamp, :description
+
+        def initialize(id:, account_id:, amount:, type:, timestamp:, description: nil)
+          @id = id
+          @account_id = account_id
+          @amount = amount # Money
+          @type = type # :credit or :debit
+          @timestamp = timestamp
+          @description = description
+        end
+
+        def signed_amount
+          case type
+          when :credit
+            amount
+          when :debit
+            ValueObjects::Money.new(-amount.amount, currency: amount.currency)
+          else
+            raise "Unknown transaction type #{type}"
+          end
+        end
+      end
+    end
+  end
+end
