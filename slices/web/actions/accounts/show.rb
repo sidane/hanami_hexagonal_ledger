@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require "budget_ledger/domain/use_cases/get_account_details"
+
 module Web
   module Actions
     module Accounts
       class Show < Web::Action
         include Deps[
-          "ledger.services.get_account_details_service"
+          "ledger.persistence.account_repository",
+          "ledger.persistence.transaction_repository"
         ]
 
         handle_exception(
@@ -13,12 +16,13 @@ module Web
         )
 
         def handle(request, response)
-          details = get_account_details_service.call(
-            account_id: request.params[:id]
-          )
+          account_details = BudgetLedger::Domain::UseCases::GetAccountDetails.new(
+            account_repository:,
+            transaction_repository:
+          ).call(account_id: request.params[:id])
 
           json_response(response:, status: 200) do
-            Serializers::AccountDetailsSerializer.serialize(details)
+            Serializers::AccountDetailsSerializer.serialize(account_details)
           end
         end
 
