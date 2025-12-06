@@ -2,6 +2,7 @@ require "securerandom"
 require "budget_ledger/domain/ports/transaction_repository"
 require "budget_ledger/domain/entities/transaction"
 
+# Outbound Adapter
 module Ledger
   module Persistence
     class TransactionRepository

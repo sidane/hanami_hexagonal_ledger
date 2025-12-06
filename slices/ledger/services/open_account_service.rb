@@ -1,5 +1,6 @@
 require "budget_ledger/domain/use_cases/open_account"
 
+# Inbound Orchestration
 module Ledger
   module Services
     class OpenAccountService

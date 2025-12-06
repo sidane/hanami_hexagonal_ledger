@@ -2,6 +2,7 @@ require_relative "../entities/account"
 require_relative "../value_objects/money"
 require "bigdecimal"
 
+# Inbound Port
 module BudgetLedger
   module Domain
     module UseCases

@@ -1,5 +1,6 @@
 require_relative "../errors"
 
+# Inbound Port
 module BudgetLedger
   module Domain
     module UseCases

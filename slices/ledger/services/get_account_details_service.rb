@@ -1,5 +1,6 @@
 require "budget_ledger/domain/use_cases/get_account_details"
 
+# Inbound Orchestration
 module Ledger
   module Services
     class GetAccountDetailsService

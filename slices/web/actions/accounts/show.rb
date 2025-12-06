@@ -2,6 +2,7 @@
 
 require "budget_ledger/domain/use_cases/get_account_details"
 
+# Inbound Adapter
 module Web
   module Actions
     module Accounts

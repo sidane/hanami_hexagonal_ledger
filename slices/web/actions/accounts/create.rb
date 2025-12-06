@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Inbound Adapter
 module Web
   module Actions
     module Accounts

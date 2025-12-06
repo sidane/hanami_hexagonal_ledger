@@ -3,6 +3,7 @@ require "budget_ledger/domain/ports/account_repository"
 require "budget_ledger/domain/entities/account"
 require "budget_ledger/domain/value_objects/money"
 
+# Outbound Adapter
 module Ledger
   module Persistence
     class AccountRepository

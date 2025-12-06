@@ -3,6 +3,7 @@ require_relative "../entities/transaction"
 require_relative "../value_objects/money"
 require_relative "../errors"
 
+# Inbound Port
 module BudgetLedger
   module Domain
     module UseCases
