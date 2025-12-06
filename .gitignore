@@ -5,4 +5,5 @@ public/*
 !public/500.html
 node_modules/
 db/*.sqlite
+config/db/*.sqlite
 spec/examples.txt
