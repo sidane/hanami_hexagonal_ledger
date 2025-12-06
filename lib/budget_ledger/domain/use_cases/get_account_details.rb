@@ -11,7 +11,7 @@ module BudgetLedger
 
         def call(account_id:)
           account = @account_repository.find(account_id)
-          raise_if_account_not_found(account_id)
+          raise_if_account_not_found(account)
 
           transactions = @transaction_repository.for_account(account_id)
           {
@@ -38,11 +38,13 @@ module BudgetLedger
 
         attr_reader :account_repository, :transaction_repository
 
-        def raise_if_account_not_found(account_id)
-          raise(
-            Errors::AccountNotFound,
-            "Account with ID #{account_id} not found"
-          )
+        def raise_if_account_not_found(account)
+          unless account
+            raise(
+              Errors::AccountNotFound,
+              "Account with ID #{account_id} not found"
+            )
+          end
         end
       end
     end

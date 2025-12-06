@@ -2,14 +2,16 @@ module BudgetLedger
   module Domain
     module Entities
       class Transaction
-        attr_reader :id, :account_id, :amount, :type, :timestamp, :description
+        attr_reader :id, :account_id, :amount, :type, :timestamp, :currency,
+          :description
 
-        def initialize(id:, account_id:, amount:, type:, timestamp:, description: nil)
+        def initialize(id:, account_id:, amount:, type:, timestamp:, currency:, description: nil)
           @id = id
           @account_id = account_id
           @amount = amount # Money
           @type = type # :credit or :debit
           @timestamp = timestamp
+          @currency = currency
           @description = description
         end
 

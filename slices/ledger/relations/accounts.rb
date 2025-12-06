@@ -1,6 +1,6 @@
 module Ledger
   module Relations
-    class Accounts < ROM::Relation[:sql]
+    class Accounts < Hanami::DB::Relation
       schema(:accounts, infer: true)
     end
   end

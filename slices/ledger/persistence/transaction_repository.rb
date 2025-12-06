@@ -6,35 +6,51 @@ module Ledger
   module Persistence
     class TransactionRepository
       include BudgetLedger::Domain::Ports::TransactionRepository
+      include Deps["relations.transactions"]
 
-      @store = {}
-
-      class << self
-        attr_reader :store
-      end
-
-      def initialize
-        @store = self.class.store
-      end
-
-      # Outbound port implementation
       def create(transaction)
-        id = SecureRandom.uuid
-        stored = BudgetLedger::Domain::Entities::Transaction.new(
-          id:,
+        tuple = transactions.changeset(:create, {
           account_id: transaction.account_id,
-          amount: transaction.amount,
-          type: transaction.type,
+          amount_cents: to_cents(transaction.amount),
+          currency: transaction.amount.currency,
+          type: transaction.type.to_s,
           timestamp: transaction.timestamp,
           description: transaction.description
-        )
+        }).commit
 
-        @store[id] = stored
-        stored
+        to_entity(tuple)
       end
 
       def for_account(account_id)
-        @store.values.select { |t| t.account_id == account_id }
+        transactions
+          .where(account_id: account_id)
+          .to_a
+          .map { |tuple| to_entity(tuple) }
+      end
+
+      private
+
+      def to_entity(tuple)
+        BudgetLedger::Domain::Entities::Transaction.new(
+          id: tuple[:id],
+          account_id: tuple[:account_id],
+          amount: BudgetLedger::Domain::ValueObjects::Money.new(
+            from_cents(tuple[:amount_cents]),
+            currency: tuple[:currency]
+          ),
+          type: tuple[:type].to_sym,
+          timestamp: tuple[:timestamp],
+          currency: tuple[:currency],
+          description: tuple[:description]
+        )
+      end
+
+      def to_cents(money)
+        (money.amount * 100).to_i
+      end
+
+      def from_cents(cents)
+        BigDecimal(cents, 0) / 100
       end
     end
   end
